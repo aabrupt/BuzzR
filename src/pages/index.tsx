@@ -1,18 +1,19 @@
-import type { NextPage, GetServerSidePropsContext, InferGetServerSidePropsType} from 'next'
+import type { NextPage } from 'next'
+import Link from 'next/link'
+import {useRouter, NextRouter} from 'next/router'
+// Layouts
 import Layout from '@layouts/Default.layout'
 
-export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  let data = ""
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-  return ({
-    data,
-  })
-}
+const Home: NextPage = () => {
 
-const Home: NextPage = ({data}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router: NextRouter = useRouter()
+
   return (
-    <Layout title="Home">
-
+    <Layout title="BuzzR">
+      <Link href={{pathname: "/logout"}}>Log out</Link>
+      {/* Chat */}
     </Layout>
   )
 }

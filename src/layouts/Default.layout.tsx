@@ -1,5 +1,7 @@
 import type {FC} from 'react'
 import Head from 'next/head'
+import Navbar from '@components/Navbar'
+import Footer from '@components/Footer'
 
 const Default: FC<{title: string}> = ({children, title}) => {
     return (
@@ -14,9 +16,13 @@ const Default: FC<{title: string}> = ({children, title}) => {
             <link href="/Source_Sans_Pro/SourceSansPro-Semibold" ref="stylesheet" />
         </Head>
 
+        <Navbar />
+
         <main>
             {children}
         </main>
+
+        <Footer />
     </>
     )
 }
