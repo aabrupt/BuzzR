@@ -28,7 +28,7 @@ const Login: NextPage = () => {
                 <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
                 <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} />
                 <button onClick={send}>Submit</button>
-                {!error ? null : error}
+                <p className={styles.error}>{error}</p>
             </form>
         </div>
     )

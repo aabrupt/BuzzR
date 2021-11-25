@@ -39,7 +39,7 @@ const SignUp: NextPage = () => {
                 <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)}/>
                 <input type="password" name="passwordCheck" value={passwordCheck} onChange={e => setPasswordCheck(e.target.value)}/>
                 <button onClick={e => send(e)}>Submit</button>
-                {!error ? null : <p>{error}</p>}
+                <p className={styles.error}>{error}</p>
 
             </form>
         </div>
