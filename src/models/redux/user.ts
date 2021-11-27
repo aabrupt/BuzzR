@@ -1,11 +1,21 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface User {
+export interface User {
     username: string
     name: string
     lastname: string
     email: string
-    friends: Array<string>
+    contacts: Array<string>
+    dob: Date
+    logs: { 
+        last_login: Date
+        last_password_reset: Date
+        last_activity: Date  
+    }
+    states: {
+        online: boolean
+        available: boolean
+    }
     _id: string
 }
 
