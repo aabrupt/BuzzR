@@ -7,25 +7,13 @@ const user = new Schema({
     },
     name: String,
     lastname: String,
-    email: {
-        type: String,
-        unique: true,
-    },
+    email: String,
     password: String,
     dob: Date,
     logs: {
-        last_activity: {
-            type: Date,
-            default: new Date()
-        },
-        last_login: {
-            type: Date,
-            default: new Date()
-        },
-        last_password_reset: {
-            type: Date,
-            default: new Date()
-        },
+        last_activity: Date,
+        last_login: Date,
+        last_password_reset: Date,
     },
     state: {
         online: {
@@ -38,6 +26,7 @@ const user = new Schema({
         },
     },
     contacts: [String],
+    requests: [String],
 })
 
 const chat = new Schema({

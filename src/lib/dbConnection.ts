@@ -1,17 +1,21 @@
 import mongoose from 'mongoose'
 
-const CACHE = mongoose.connection
-const DB_URI = process.env.DB_URI
+const MONGODB_URI = process.env.DB_URI
 
-export default (): mongoose.Connection => {
-    if (DB_URI == "" || DB_URI == null) {
+let cached = mongoose.connection
+
+async function dbConnect() {
+
+    if (!MONGODB_URI) {
         process.exitCode = 1
         process.exit()
     }
 
-    if (CACHE == null) {
-        return mongoose.createConnection(DB_URI)
+    if (cached.readyState == 0) {
+        mongoose.connect(MONGODB_URI)
+        cached = mongoose.connection
     }
-
-    return CACHE
+    return cached
 }
+
+export default dbConnect
