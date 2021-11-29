@@ -9,15 +9,18 @@ export default async function handler(
   dbConnection()
   switch(req.method) {
       case "PUT": {
-        const {_id} = req.body
+        const {_id, salt} = req.body
         try {
-          if (!_id) {
+          if (!_id || !salt) {
               throw 'Incorrect body'
           }
 
           const you = await User.findOne({_id: req.query.id})
           if (!you.requests.includes(_id)) {
             throw 'No request error'
+          }
+          if (salt != you.salt) {
+            throw 'Incorrect user'
           }
 
           let requests: Array<string> = []
@@ -39,13 +42,17 @@ export default async function handler(
         }
       }
       case "DELETE": {
-        const {_id} = req.body
+        const {_id, salt} = req.body
         try {
-          if (!_id) {
+          if (!_id || !salt) {
               throw 'Incorrect body'
           }
 
           let you = await User.findOne({_id: req.query.id})
+          
+          if (salt != you.salt) {
+            throw 'Incorrect user'
+          }
 
           let contacts: Array<string> = []
           for (let x in you.contacts) {

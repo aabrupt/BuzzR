@@ -1,4 +1,5 @@
 import {Schema, model, models} from 'mongoose'
+import { nanoid } from 'nanoid'
 
 const user = new Schema({
     username: {
@@ -10,6 +11,10 @@ const user = new Schema({
     email: String,
     password: String,
     dob: Date,
+    salt: {
+        type: String,
+        default: nanoid(16),
+    },
     logs: {
         last_activity: Date,
         last_login: Date,
