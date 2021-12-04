@@ -16,6 +16,10 @@ export default async function handler(
           }
 
           const you = await User.findOne({_id: req.query.id})
+          if (!you) {
+            throw 'Cannot find user'
+          }
+
           if (!you.requests.includes(_id)) {
             throw 'No request error'
           }
@@ -23,19 +27,14 @@ export default async function handler(
             throw 'Incorrect user'
           }
 
-          let requests: Array<string> = []
-          for (let x in you.requests) {
-              if (x != _id) {
-                  requests.push(x)
-              }
-          }
+          let requests = you.requests.filter((x: any) => x != _id)
+
           let contacts: Array<string> = you.contacts
           contacts.push(_id)
 
           await User.updateOne({_id: req.query.id}, {requests, contacts})
-          const newUser = await User.findOne({_id: req.query.id})
 
-          res.status(201).json({before: you, after: newUser})
+          return res.status(201).json({contacts, requests})
 
         } catch (e: any) {
           return res.status(406).json({error: e.toString()})
@@ -49,23 +48,21 @@ export default async function handler(
           }
 
           let you = await User.findOne({_id: req.query.id})
+
+          if (!you) {
+            throw 'Cannot find user'
+          }
           
           if (salt != you.salt) {
             throw 'Incorrect user'
           }
 
-          let contacts: Array<string> = []
-          for (let x in you.contacts) {
-            if (x != _id) {
-                contacts.push(x)
-            }
-          }
+          let contacts = you.contacts.filter((x: any) => x != _id)
+          let requests = you.requests.filter((x: any) => x != _id)
 
-          await User.updateOne({_id: req.query.id}, {contacts})
+          await User.updateOne({_id: req.query.id}, {contacts, requests})
 
-          let newYou = await User.findOne({_id: req.query.id})
-
-          res.status(201).json({before: you, after: newYou})
+          res.status(201).json({contacts, requests})
 
         } catch (e: any) {
           return res.status(406).json({error: e.toString()})
