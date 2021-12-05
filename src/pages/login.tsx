@@ -1,4 +1,5 @@
 import type {NextPage} from 'next'
+import Link from 'next/link'
 import { MouseEvent, useState, useEffect } from 'react'
 import styles from '@styles/login.module.sass'
 import axios from '@lib/axios'
@@ -24,12 +25,15 @@ const Login: NextPage = () => {
 
     return (
         <div className={styles.container}>
-            <form>
-                <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
-                <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} />
-                <button onClick={send}>Submit</button>
+            <div className={styles.card}>
+                <form>
+                    <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
+                    <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} />
+                    <button onClick={send}>Submit</button>
+                </form>
                 <p className={styles.error}>{error}</p>
-            </form>
+                <p className={styles.change}>Don't have an account? <Link href="/signup">Sign up</Link></p>
+            </div>
         </div>
     )
 }

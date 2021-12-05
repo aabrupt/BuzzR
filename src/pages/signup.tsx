@@ -38,17 +38,19 @@ const SignUp: NextPage = () => {
 
     return (
         <div className={styles.container}>
-            <form>
-                <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
-                <input type="text" name="firstname" value={firstName} onChange={e => setFirstName(e.target.value)}/>
-                <input type="text" name="lastname" value={lastName} onChange={e => setLastName(e.target.value)}/>
-                <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} />
-                <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)}/>
-                <input type="password" name="passwordCheck" value={passwordCheck} onChange={e => setPasswordCheck(e.target.value)}/>
-                <button onClick={e => send(e)}>Submit</button>
+            <div className={styles.card}>
+                <form>
+                    <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
+                    <input type="text" name="firstname" value={firstName} onChange={e => setFirstName(e.target.value)}/>
+                    <input type="text" name="lastname" value={lastName} onChange={e => setLastName(e.target.value)}/>
+                    <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+                    <input type="password" name="password" value={password} onChange={e => setPassword(e.target.value)}/>
+                    <input type="password" name="passwordCheck" value={passwordCheck} onChange={e => setPasswordCheck(e.target.value)}/>
+                    <button onClick={e => send(e)}>Submit</button>
+                </form>
                 <p className={styles.error}>{error}</p>
-
-            </form>
+                <p className={styles.change}>Already have an account? <Link href="/signup">Login</Link></p>
+            </div>
         </div>
     )
 }
