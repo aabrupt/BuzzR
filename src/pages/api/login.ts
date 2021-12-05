@@ -14,12 +14,14 @@ export default async function handler(
           if(!username || !password) {
             throw 'Incorrect body'
           } else {
-            console.log("starting finding user...")
             const user = await User.findOne({
               username,
               password: Buffer.from(password).toString('base64')
-            }, {}, {timeout: true, maxTimeMS: 1000})
-            console.log(user)
+            })
+
+            if (!user) {
+              throw 'No matching user'
+            }
 
             return res.status(200).json(user)
           }

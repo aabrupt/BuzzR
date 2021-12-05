@@ -17,11 +17,18 @@ export default async function handler(
 
           let user = await User.findOne({_id})
 
+          if (!user) {
+            throw 'Cannot find user'
+          }
+
+          if (user.requests.includes(req.query.id) || user.contacts.includes(req.query.id)) {
+            throw 'Already sent'
+          }
           user.requests.push(req.query.id)
 
           await User.updateOne({_id}, {requests: user.requests})
 
-          return res.status(201).json({user})
+          return res.status(201).json({requests: user.requests})
 
         } catch (e: any) {
           return res.status(406).json({error: e.toString()})

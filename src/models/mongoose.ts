@@ -1,5 +1,7 @@
+import { fstat } from 'fs'
 import {Schema, model, models} from 'mongoose'
 import { nanoid } from 'nanoid'
+import fs from 'fs'
 
 const user = new Schema({
     username: {
@@ -10,6 +12,10 @@ const user = new Schema({
     lastname: String,
     email: String,
     password: String,
+    icon: {
+        data: Buffer,
+        contentType: String,
+    },
     dob: Date,
     salt: {
         type: String,
@@ -41,7 +47,11 @@ const chat = new Schema({
     messages: [{
         author: String,
         body: String
-    }]
+    }],
+    salt: {
+        type: String,
+        default: nanoid(16),
+    },
 })
 
 export const User = models['User'] || model('User', user)
