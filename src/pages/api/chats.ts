@@ -16,9 +16,41 @@ export default async function handler(
                 throw 'Incorrect body'
             }
 
-            const chats = Chat.find({members: [_id]})
+            const chats = Chat.find({members: {$in: [_id]}})
 
-            return res.status(200).json(user)
+            return res.status(200).json(chats)
+            
+            } catch (e: any) {
+            return res.status(406).json({error: e.toString()})
+            }
+        }
+        case "PUT": {
+            const {ids, name} = req.body
+            try {
+            
+            if (!ids || ids.length == 0 || !name) {
+                throw 'Incorrect body'
+            }
+
+            const chats = Chat.create({members: ids})
+
+            return res.status(200).json(chats)
+            
+            } catch (e: any) {
+            return res.status(406).json({error: e.toString()})
+            }
+        }
+        case "DELETE": {
+            const {_id, salt} = req.body
+            try {
+            
+            if (!_id || !salt) {
+                throw 'Incorrect body'
+            }
+
+            Chat.deleteOne({_id, salt})
+
+            return res.status(200).json({deleteID: _id})
             
             } catch (e: any) {
             return res.status(406).json({error: e.toString()})

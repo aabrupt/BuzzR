@@ -47,7 +47,11 @@ const chat = new Schema({
     messages: [{
         author: String,
         body: String
-    }]
+    }],
+    salt: {
+        type: String,
+        default: nanoid(16),
+    },
 })
 
 export const User = models['User'] || model('User', user)

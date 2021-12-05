@@ -34,7 +34,6 @@ export default async function handler(
             if(!_id || !salt) {
                 throw 'Incorrect body'
             } else {
-                console.log("starting finding user...")
                 const user = await User.findOne({_id, salt})
 
                 if (!user) {
@@ -43,7 +42,7 @@ export default async function handler(
 
                 await User.deleteOne({_id, salt})
 
-                return res.status(201).json({deletedUser: user})
+                return res.status(201).json({deletedID: user})
             }
             } catch (e: any) {
             return res.status(406).json({error: e.toString()})
