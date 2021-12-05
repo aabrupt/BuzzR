@@ -1,32 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface User {
-    username: string
-    name: string
-    lastname: string
-    email: string
-    contacts: Array<string>
-    dob: Date
-    logs: { 
-        last_login: Date
-        last_password_reset: Date
-        last_activity: Date  
-    }
-    states: {
-        online: boolean
-        available: boolean
-    }
-    _id: string
+    [id: string]: any
 }
 
-const initialState: User | {} = {}
+const initialState: User = {value: {}}
 
 export const userSlice = createSlice({
     name: "user",
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<User>) => {
-            state = action.payload
+            state.value = action.payload
+            console.log(state.value == action.payload)
         }
     }
 })
