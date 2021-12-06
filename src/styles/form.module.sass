@@ -17,7 +17,7 @@
     width: 40rem
     box-shadow: 3px 3px 20px 15px $dark1
     border-radius: 2rem
-    padding: 5rem 7rem
+    padding: 3rem 7rem
     background-color: $dark4
     
     *
@@ -26,8 +26,11 @@
     form
         display: flex
         flex-direction: column
-        gap: 1rem
+        gap: 2rem
         width: 100%
+
+        div
+            display: flex
 
         input
             outline: none
@@ -38,6 +41,24 @@
             background: none
             width: 100%
 
+        input + label
+            position: absolute
+            padding: 1rem 1.5rem
+            font-size: $font-medium
+            pointer-events: none
+            transition: all 0.3s ease
+            display: block
+
+        input[value]:not([value='']) + label
+            font-size: 1rem
+            padding: 0 1rem
+            margin-top: -1.5rem
+
+        input:focus + label
+            font-size: 1rem
+            padding: 0 1rem
+            margin-top: -1.5rem
+
         button
             font-size: $font-medium
             background-color: $aurora4
@@ -47,6 +68,10 @@
             padding: 1rem
             cursor: pointer
             border: none
+
+            &:focus
+                outline: 2px solid $dark1
+                outline-offset: 0.5rem
         
         .password
             display: flex
@@ -69,13 +94,17 @@
                 align-self: flex-end
                 align-self: center
                 font-size: $font-small
-                height: 2rem
+                height: 100%
                 background: $dark4
                 padding-right: 1rem
                 user-select: none
 
                 &:hover
                     color: $light2
+
+                &:focus
+                    outline: none
+                    outline-offset: 0
 
     .change
         font-size: $font-medium

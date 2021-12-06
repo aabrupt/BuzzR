@@ -43,25 +43,39 @@ const SignUp: NextPage = () => {
         <div className={styles.container}>
             <div className={styles.card}>
                 <form>
-                    <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
-                    <input type="text" name="firstname" value={firstName} onChange={e => setFirstName(e.target.value)}/>
-                    <input type="text" name="lastname" value={lastName} onChange={e => setLastName(e.target.value)}/>
-                    <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+                    <div>
+                        <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
+                        <label htmlFor="username">Username</label>
+                    </div>
+                    <div>
+                        <input type="text" name="firstname" value={firstName} onChange={e => setFirstName(e.target.value)}/>
+                        <label htmlFor="firstname">Firstname</label>
+                    </div>
+                    <div>
+                        <input type="text" name="lastname" value={lastName} onChange={e => setLastName(e.target.value)}/>
+                        <label htmlFor="lastname">Lastname</label>
+                    </div>
+                    <div>
+                        <input type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} />
+                        <label htmlFor="email">Email</label>
+                    </div>
                     <div className={styles.password}>
                         <input type={showPass ? "text" : "password"} name="password" value={password} onChange={e => setPassword(e.target.value)} />
+                        <label htmlFor="password">Password</label>
                         <button onClick={e => {
                             e.preventDefault()
                             setShowPass(!showPass)
-                        }}>{showPass ? "Hide":"Show"}</button>
+                        }} tabIndex={-1} >{showPass ? "Hide":"Show"}</button>
                     </div>
                     <div className={styles.password}>
-                        <input type={showPassCheck ? "text" : "password"} name="password" value={passwordCheck} onChange={e => setPasswordCheck(e.target.value)} />
+                        <input type={showPassCheck ? "text" : "password"} name="passwordCheck" value={passwordCheck} onChange={e => setPasswordCheck(e.target.value)} />
+                        <label htmlFor="passwordCheck">Password again</label>
                         <button onClick={e => {
                             e.preventDefault()
                             setShowPassCheck(!showPassCheck)
-                        }}>{showPassCheck ? "Hide":"Show"}</button>
+                        }} tabIndex={-1} >{showPassCheck ? "Hide":"Show"}</button>
                     </div>
-                    <button onClick={e => send(e)} tabIndex={0}>Submit</button>
+                    <button onClick={e => send(e)}>Submit</button>
                 </form>
                 <p className={styles.error}>{error}</p>
                 <p className={styles.change}>Already have an account? <Link href="/login">Login</Link></p>

@@ -74,11 +74,13 @@ const Login: NextPage = (data: InferGetServerSidePropsType<typeof getServerSideP
             <div className={styles.card}>
                 <form>
                     <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
+                    <label htmlFor="username">Username</label>
                     <div className={styles.password}>
                         <input type={showPass ? "text" : "password"} name="password" value={password} onChange={e => setPassword(e.target.value)} />
-                        <button onClick={showPassClick}>{showPass ? "Hide":"Show"}</button>
+                        <label htmlFor="password">Password</label>
+                        <button onClick={showPassClick} tabIndex={-1} >{showPass ? "Hide":"Show"}</button>
                     </div>
-                    <button onClick={send} tabIndex={0}>Submit</button>
+                    <button onClick={send} >Submit</button>
                 </form>
                 <p className={styles.error}>{error}</p>
                 <p className={styles.change}>Don't have an account? <Link href="/signup">Sign up</Link></p>

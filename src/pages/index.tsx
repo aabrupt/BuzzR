@@ -5,8 +5,6 @@ import {useRouter, NextRouter} from 'next/router'
 import { useAppSelector, useAppDispatch } from '@lib/redux-hooks'
 // Layouts
 import Layout from '@layouts/Default.layout'
-import { STATES } from 'mongoose'
-import { getRouteRegex } from 'next/dist/shared/lib/router/utils'
 
 const Home: NextPage = () => {
 
