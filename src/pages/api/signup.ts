@@ -47,7 +47,7 @@ export default async function handler(
 
                 const user = await User.findOne({
                     username,
-                    password: Buffer.from(password).toString('base64'),
+                    password: Buffer.from(password + process.env.SALT).toString('base64'),
                     name,
                     lastname,
                     email,

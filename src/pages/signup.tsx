@@ -52,16 +52,16 @@ const SignUp: NextPage = () => {
                         <button onClick={e => {
                             e.preventDefault()
                             setShowPass(!showPass)
-                        }} tabIndex={-1}>{showPass ? "Hide":"Show"}</button>
+                        }}>{showPass ? "Hide":"Show"}</button>
                     </div>
                     <div className={styles.password}>
                         <input type={showPassCheck ? "text" : "password"} name="password" value={passwordCheck} onChange={e => setPasswordCheck(e.target.value)} />
                         <button onClick={e => {
                             e.preventDefault()
                             setShowPassCheck(!showPassCheck)
-                        }} tabIndex={-1}>{showPassCheck ? "Hide":"Show"}</button>
+                        }}>{showPassCheck ? "Hide":"Show"}</button>
                     </div>
-                    <button onClick={e => send(e)}>Submit</button>
+                    <button onClick={e => send(e)} tabIndex={0}>Submit</button>
                 </form>
                 <p className={styles.error}>{error}</p>
                 <p className={styles.change}>Already have an account? <Link href="/login">Login</Link></p>

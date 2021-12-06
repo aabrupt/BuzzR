@@ -8,7 +8,7 @@ export default async function handler(
 ) {
     dbConnection()
     switch(req.method) {
-        case "GET": {
+        case "POST": {
             const {_id} = req.body
             try {
 

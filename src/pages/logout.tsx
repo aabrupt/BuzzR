@@ -4,11 +4,13 @@ import Link from 'next/link'
 import axios from '@lib/axios'
 import {useRouter, NextRouter} from 'next/router'
 import { useEffect } from 'react'
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+import { useAppSelector, useAppDispatch } from '@lib/redux-hooks'
+import { setUser } from '@models/redux/user'
 
 const Logout: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = ({data, error, query, url}) => {
     const router: NextRouter = useRouter()
+    const user = useAppSelector((state) => state.user)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         if (data != null) {
@@ -16,6 +18,8 @@ const Logout: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
                 router.back()
             }, 7000)
         }
+        dispatch(setUser({}))
+        localStorage.removeItem("userid")
     }, [])
 
     return (

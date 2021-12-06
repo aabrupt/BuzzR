@@ -7,7 +7,8 @@ module.exports = {
           {
               apply: (compiler) => {
                   compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-                      process.env.SALT = nanoid(15)
+                      process.env.SALT = nanoid(16)
+                      process.env.KEY = nanoid(16)
                   });
               }
           }    
