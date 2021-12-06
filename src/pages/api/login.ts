@@ -8,8 +8,9 @@ export default async function handler(
 ) {
   dbConnection()
   switch(req.method) {
-      case "GET": {
+      case "POST": {
         const {username, password} = req.body
+        console.log(req.body)
         try {
           if(!username || !password) {
             throw 'Incorrect body'
@@ -26,7 +27,7 @@ export default async function handler(
             return res.status(200).json(user)
           }
         } catch (e: any) {
-          return res.status(406).json({error: e.toString()})
+          return res.status(200).json({error: e.toString(), status: 406})
         }
       }
       default: {
