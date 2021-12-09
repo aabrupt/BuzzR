@@ -2,12 +2,12 @@ import type {FC} from 'react'
 import Head from 'next/head'
 import Navbar from '@components/Navbar'
 import Footer from '@components/Footer'
-import SaveLogin from '@components/SaveLogin'
+import LoadLogin from '@components/LoadLogin'
 
 const Default: FC<{title: string}> = ({children, title}) => {
     return (
     <>
-        <SaveLogin />
+        <LoadLogin />
         <Head>
             <title>{title}</title>
             <link href="/Source_Sans_Pro/SourceSansPro-Black" ref="stylesheet" />

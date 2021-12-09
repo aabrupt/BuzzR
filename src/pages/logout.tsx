@@ -13,9 +13,10 @@ const Logout: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+        router.prefetch("/")
         if (data != null) {
             setTimeout(() => {
-                router.back()
+                router.push("/")
             }, 7000)
         }
         dispatch(setUser({}))

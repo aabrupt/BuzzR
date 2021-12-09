@@ -5,18 +5,20 @@ import { MouseEvent, useState, useEffect } from 'react'
 import styles from '@styles/form.module.sass'
 import axios from '@lib/axios'
 import CryptoJS from 'crypto-js'
-import SaveLogin from '@components/SaveLogin'
+import LoadLogin from '@components/LoadLogin'
 // Redux
 import { useAppSelector, useAppDispatch } from '@lib/redux-hooks'
 import {setUser} from '@models/redux/user'
+import { saveUser } from '@lib/saveUser'
 
-const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
-        props: {KEY: process.env.KEY as string}
+        props: {
+        }
     }
 }
 
-const Login: NextPage = (data: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Login: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = () => {
 
     const router = useRouter()
 
@@ -43,8 +45,8 @@ const Login: NextPage = (data: InferGetServerSidePropsType<typeof getServerSideP
         }
     }, [user.value])
 
-    const send = async (e: MouseEvent) => {
-        e.preventDefault()
+    const send = async (e?: MouseEvent) => {
+        e?.preventDefault()
 
         const res = await axios({
             url: "/api/login",
@@ -56,10 +58,11 @@ const Login: NextPage = (data: InferGetServerSidePropsType<typeof getServerSideP
         })
 
         setError(!!res.data.error ? res.data.status == 406 ? 'Incorrect username or password' : 'Error submitting data' : '')
+        if (error != '') return
 
         dispatch(setUser(res.data))
-        console.log(data)
-        localStorage.setItem("user", JSON.stringify([CryptoJS.AES.encrypt(res.data._id, data.KEY as string), CryptoJS.AES.encrypt(res.data.salt, data.KEY as string)]))
+
+        saveUser(res.data._id, res.data.salt)
     }
 
     const showPassClick = (e: MouseEvent) => {
@@ -70,9 +73,14 @@ const Login: NextPage = (data: InferGetServerSidePropsType<typeof getServerSideP
 
     return (
         <div className={styles.container}>
-            <SaveLogin />
+            <LoadLogin />
             <div className={styles.card}>
-                <form>
+                <form onKeyPress={(e) => {
+                    if(e.key == 'Enter') {
+                        e.preventDefault()
+                        send()
+                    }
+                }}>
                     <input type="text" name="username" value={username} onChange={e => setUsername(e.target.value)}/>
                     <label htmlFor="username">Username</label>
                     <div className={styles.password}>
@@ -80,7 +88,7 @@ const Login: NextPage = (data: InferGetServerSidePropsType<typeof getServerSideP
                         <label htmlFor="password">Password</label>
                         <button onClick={showPassClick} tabIndex={-1} >{showPass ? "Hide":"Show"}</button>
                     </div>
-                    <button onClick={send} >Submit</button>
+                    <button onClick={send} tabIndex={0}>Submit</button>
                 </form>
                 <p className={styles.error}>{error}</p>
                 <p className={styles.change}>Don't have an account? <Link href="/signup">Sign up</Link></p>

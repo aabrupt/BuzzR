@@ -1,6 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import {User} from '@models/mongoose'
 import dbConnection from '@lib/dbConnection'
+import CryptoJS from 'crypto-js'
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,7 +19,7 @@ export default async function handler(
           } else if (!_id || !salt) {
             user = await User.findOne({
               username,
-              password: Buffer.from(password + process.env.SALT).toString('base64')
+              password: CryptoJS.SHA512(password + process.env.SALT).toString(CryptoJS.enc.Base64)
             })
           } else {
             user = await User.findOne({

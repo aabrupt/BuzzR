@@ -1,4 +1,4 @@
-import type { NextPage, GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import type { NextPage, GetStaticProps, InferGetStaticPropsType } from 'next'
 import {useEffect} from 'react'
 import Link from 'next/link'
 import {useRouter, NextRouter} from 'next/router'
