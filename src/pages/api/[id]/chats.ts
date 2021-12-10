@@ -8,6 +8,7 @@ export default async function handler(
 ) {
     dbConnection()
     switch(req.method) {
+        // TODO: Rework requests to use id url parameter
         case "GET": {
             const {_id} = req.body
             try {

@@ -42,7 +42,7 @@ export default async function handler(
                     lastname,
                     email,
                 })
-
+                // TODO: Only rturn necessary part of user
                 return res.status(201).json(user)
             } catch (e: any) {
                 return res.status(200).json({error: e.toString(), status: 406})

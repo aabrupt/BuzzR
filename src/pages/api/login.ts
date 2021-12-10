@@ -32,6 +32,7 @@ export default async function handler(
             throw 'No matching user'
           }
 
+          //TODO: Only return necessary part of user
           return res.status(200).json(user)
         } catch (e: any) {
           return res.status(200).json({error: e.toString(), status: 406})

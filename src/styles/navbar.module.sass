@@ -1,0 +1,42 @@
+@use '_vars' as *
+
+.container
+    background: $dark2
+    display: flex
+    justify-content: center
+    align-items: center
+    height: 4rem
+
+.navigation
+    list-style-type: none
+    display: flex
+    gap: 5vw
+    height: 80%
+    margin: 0
+    justify-content: space-between
+    align-items: center
+    padding: 0
+
+    li
+        height: 50%
+
+    button
+        display: block
+        height: 100%
+        background: rgba(255, 255, 255, 0.055)
+        border-radius: 0.5rem
+        cursor: pointer
+        transition: background 0.2s ease-in-out
+
+        &:hover
+            background: rgba(255, 255, 255, 0.144)
+
+    li, button
+        text-align: center
+        color: $light3
+        border: none
+        outline: none
+        width: 6rem
+        height: auto
+        padding: 0.5rem 0
+        font-size: $font-small

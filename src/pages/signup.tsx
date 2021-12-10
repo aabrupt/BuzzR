@@ -9,6 +9,7 @@ import { useAppSelector, useAppDispatch } from '@lib/redux-hooks'
 import { setUser } from '@models/redux/user'
 import CryptoJS from 'crypto-js'
 import LoadLogin from '@components/LoadLogin'
+import { saveUser } from '@lib/saveUser'
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
@@ -32,10 +33,19 @@ const SignUp: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
     const [showPassCheck, setShowPassCheck] = useState<boolean>(false)
 
     const user = useAppSelector((state) => state.user)
+    const userLoaded = useAppSelector((state) => state.userLoaded)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
+
         router.prefetch("/")
+
+        if (Object.keys(user.value).length != 0) {
+            router.push("/")
+        }
+    }, [])
+
+    useEffect(() => {
         if (Object.keys(user.value).length != 0) {
             router.push("/")
         }
@@ -61,26 +71,20 @@ const SignUp: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
             }
         })
 
-        const KEY = process.env.NEXT_PUBLIC_KEY
+        
 
-        setError(!!res.data.error ? res.data.status == 406 ? 'Incorrect username or password' : 'Error submitting data' : '')
-        if(error != '') return
+        setError(!!res.data.error ? res.data.status == 406 ? 'User already exist' : 'Error submitting data' : '')
+        if(!!res.data.error) return
 
         dispatch(setUser(res.data))
 
-        if (!!KEY) {
-            localStorage.setItem("user", 
-            JSON.stringify([
-                CryptoJS.AES.encrypt(res.data._id, KEY,).toString(), 
-                CryptoJS.AES.encrypt(res.data.salt, KEY).toString(), 
-                CryptoJS.AES.encrypt((Date.now() + 24 * 60 * 60 * 1000).toString(), KEY).toString(),
-            ]))
-        }
+        saveUser(res.data._id, res.data.salt)
     }
 
     return (
         <div className={styles.container}>
             <LoadLogin />
+            {userLoaded.value?
             <div className={styles.card}>
                 <form onKeyPress={(e) => {
                     if(e.key == 'Enter') {
@@ -124,7 +128,7 @@ const SignUp: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> =
                 </form>
                 <p className={styles.error}>{error}</p>
                 <p className={styles.change}>Already have an account? <Link href="/login">Login</Link></p>
-            </div>
+            </div>:null}
         </div>
     )
 }

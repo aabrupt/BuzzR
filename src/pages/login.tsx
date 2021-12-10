@@ -28,6 +28,7 @@ const Login: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = 
     const [error, setError] = useState<string>("")
 
     const user = useAppSelector((state) => state.user)
+    const userLoaded = useAppSelector((state) => state.userLoaded)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -58,11 +59,11 @@ const Login: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = 
         })
 
         setError(!!res.data.error ? res.data.status == 406 ? 'Incorrect username or password' : 'Error submitting data' : '')
-        if (error != '') return
+        if (!!res.data.error) return
 
-        dispatch(setUser(res.data))
+    dispatch(setUser(res.data))
 
-        saveUser(res.data._id, res.data.salt)
+    saveUser(res.data._id, res.data.salt)
     }
 
     const showPassClick = (e: MouseEvent) => {
@@ -74,6 +75,7 @@ const Login: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = 
     return (
         <div className={styles.container}>
             <LoadLogin />
+            {userLoaded.value ? 
             <div className={styles.card}>
                 <form onKeyPress={(e) => {
                     if(e.key == 'Enter') {
@@ -92,7 +94,8 @@ const Login: NextPage<InferGetServerSidePropsType<typeof getServerSideProps>> = 
                 </form>
                 <p className={styles.error}>{error}</p>
                 <p className={styles.change}>Don't have an account? <Link href="/signup">Sign up</Link></p>
-            </div>
+            </div> : null}
+            
         </div>
     )
 }

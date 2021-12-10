@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit"
 import user from '@models/redux/user'
+import userLoaded from "@models/redux/userLoaded"
 
 export const store = configureStore({
     reducer: {
         user,
+        userLoaded,
     }
 })
 

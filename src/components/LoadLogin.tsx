@@ -5,6 +5,8 @@ import axios from '@lib/axios'
 import CryptoJS from 'crypto-js'
 import { nanoid } from 'nanoid'
 import { saveUser } from '@lib/saveUser'
+import { setLoaded } from '@models/redux/userLoaded'
+import {useRouter} from 'next/router'
 
 const LoadLogin: FC = () => {
 
@@ -23,6 +25,7 @@ const LoadLogin: FC = () => {
                 CryptoJS.AES.decrypt(userid, KEY as string).toString(CryptoJS.enc.Utf8)
             } catch (e) {
                 localStorage.removeItem("user")
+                dispatch(setLoaded())
                 return
             }
             const testenc = CryptoJS.AES.encrypt("test", KEY as string).toString()
@@ -46,10 +49,13 @@ const LoadLogin: FC = () => {
                     salt,
                 }
             }).then((res) => {
-                if(!!res.data.error) return
+                if(!!res.data.error) return dispatch(setLoaded())
 
                 dispatch(setUser(res.data))
+                dispatch(setLoaded())
             })
+        } else {
+            dispatch(setLoaded())
         }
     }, [])
 
